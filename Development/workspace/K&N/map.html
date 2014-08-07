@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<!-- Author: Nathan Robeck -->
+<!-- Kristen and Nate's Grand Adventures -->
+
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Map</title>
+    <style>
+      html, body, #map-canvas {
+        height: 90%;
+        margin: 0px;
+        padding: 0px
+      }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script>
+		var map; 
+		var markers = [];
+		var iwin;
+		
+		function makeInfoWindowEvent(map, infowindow, marker) {
+ 			google.maps.event.addListener(marker, 'click', function() {
+ 				if(iwin){iwin.close();};
+ 				iwin = infowindow;
+ 				infowindow.open(map, marker);});
+		}
+ 
+		function initialize() { 
+			var mapCenter = new google.maps.LatLng(45.0231, -100.4125); 
+			var mapOptions = { 
+				zoom: 5, 
+				center: mapCenter, 
+			}; 
+			
+			map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions); 
+
+			var places = [
+				['Bailey Hall','She Said Yes! 09/22/12<br>First Kiss','44.985547','-93.186758'],
+				['Como Zoo','First "Real" Date','44.982766','-93.154222'],
+				['Everest on Grand','MOMO!','44.939964','-93.154143'],
+				['Duluth, MN','First Vacation Together: New Years 2012','46.782593','-92.094216'],
+				['Pleasant Lake','4th of July 2013 + Winter Adventures 2013/2014','45.278880','-94.134851'],
+				['Anderson Hall','Where we first met','44.972187','-93.242529'],
+				['Guthrie Theater','Our first (non-dinner) fancy outing','44.978017','-93.255949'],
+				['Aamodts Apple Farm and Vineyard','Hay rides, apples, and wine!','45.041912','-92.865542'],
+				['GolfZone','Indoor Mini-Golf, Nates 22nd Birthday Surprise','44.810866','-93.542435'],
+				['St.Michael','First Christmas Together','45.245004','-93.720075'],
+				['Champlin','Cooking Adventures','45.153875','-93.413089'],
+				['MN Renaissance Festival','Ren Fest 2013','44.747031','-93.595730'],
+				['Canterbury Park','Horse Races Summer 2013','44.790847','-93.478879'],
+				['Warped Tour','Warped Tour Summer 2013','44.786913','-93.479094'],
+				['Minnehaha Falls','Spring Break 2014','44.915212','-93.209760'],
+				['Corvallis, OR','Kristen gets accepted to OSU for Grad School!<br>March 2014','44.5629725','-123.2835365'],
+				['Deadwood, SD','Roadtrip to OR: Day 1<br><a target="_blank" href=\'http://fireflyadventure.wordpress.com/2014/07/15/black-hills-day-one/\'>Kristen\'s Blog Post</a>','44.383834','-103.722955'],
+				['Yellowstone','Roadtrip to OR: Days 2 & 3<br><a target="_blank" href=\'http://fireflyadventure.wordpress.com/2014/07/17/yellowstone-aka-map-reading-101/\'>Kristen\'s Blog Post</a>','44.461958','-109.493066'],
+				['Bighorn Pass','Some of the most ridiculous driving we\'ve ever done.<br><a target="_blank" href=\'http://fireflyadventure.wordpress.com/2014/07/17/small-car-bighorn-get-it-you-will-day-two/\'>Kristen\'s Blog Post</a>','44.788909','-107.393813'],
+				['Boise, ID','Roadtrip to OR: Day 4<br><a target="_blank" href=\'http://fireflyadventure.wordpress.com/2014/07/18/the-day-of-delays-day-four/\'>Kristen\'s Blog Post</a>','43.615473','-116.231838'],
+				['Portland, OR','Roadtrip to OR: Day 5<br><a target="_blank" href=\'http://fireflyadventure.wordpress.com/2014/07/18/well-we-havent-died-of-dysentery-yet-day-five/\'>Kristen\'s Blog Post</a>','45.523563','-122.676261'],
+				['Corvallis, OR','Roadtrip to OR: Day 6<br>We made it!<a target="_blank" href=\'http://fireflyadventure.wordpress.com/2014/07/22/moving-in-settling-down/\'>Kristen\'s Blog Post</a>','44.565266','-123.258517'],
+				['Newport, OR','Pacific Coast Trip, Beaches, Lighthouses, Seafood, and Beer!<br><a target="_blank" href=\'http://fireflyadventure.wordpress.com/2014/07/30/first-impressions-corvallis/\'>Kristen\'s Blog Post</a>','44.624274','-124.063485'],
+				['Alsea Falls','Exploring Oregon<br><a target="_blank" href=\'http://fireflyadventure.wordpress.com/2014/08/07/official-oregonians/\'>Kristen\'s Blog Post</a>','44.325926','-123.491408'],
+				['Maltnomah Falls','Roadtrip to OR: Day 5 Sightseeing','45.575934','-122.116376']				
+			];
+			
+			var i = 0;
+			while(i<places.length){
+				var latLng = new google.maps.LatLng(places[i][2], places[i][3]);
+				var name = places[i][0];
+				var armMarker = new google.maps.Marker({
+					position: latLng,
+					map: map,
+					title: name,
+				});
+				var arminfowindow = new google.maps.InfoWindow({content: '<h3>'+places[i][0]+'</h3><p>'+places[i][1]+'</p><br>'});
+				makeInfoWindowEvent(map, arminfowindow, armMarker);
+				i++;
+			}
+		}
+		
+		function mapAdjust(nLat, nLng, zoom) {
+			var newCenter = new google.maps.LatLng(nLat,nLng);
+			map.panTo(newCenter);
+			map.setZoom(zoom);
+		}
+				
+		google.maps.event.addDomListener(window, 'load', initialize); 
+	</script>
+  </head>
+  <body>
+  	<div class="new">
+	        <ul>
+	        	<li><a href="index.html">Kristen &amp; Nate's Adventures</a></li>
+	        	<li><a href="pics.html">Photos</a></li>
+	        	<li><a href="map.html">Map</a></li>
+	        	<li><a href="contact.html">Contact</a></li>
+	    	</ul>	
+    </div>
+    <div id="map-canvas">Map</div>
+    
+    <div class="new">
+	        <ul>
+	        	<li><a style="font-size: 50%;" onclick="mapAdjust('45.0231','-100.4125',5);">Full Map</a></li>
+	        	<li><a style="font-size: 50%;" onclick="mapAdjust('45.0008293','-122.9001598',8);">Oregon</a></li>
+	        	<li><a style="font-size: 50%;" onclick="mapAdjust('44.5645624','-123.2572294',15);">Corvallis</a></li>
+	        	<li><a style="font-size: 50%;" onclick="mapAdjust('44.4544611','-109.2661266',6);">Roadtrip</a></li>
+	        	<li><a style="font-size: 50%;" onclick="mapAdjust('45.553621','-94.166291',7);">Minnesota</a></li>
+	        	<li><a style="font-size: 50%;" onclick="mapAdjust('44.9925748','-93.2343272',10);">Twin Cities</a></li>
+	    	</ul>	
+    </div>
+  </body>
+</html>
